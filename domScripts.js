@@ -6,6 +6,19 @@
 
 
 const boardEl = document.querySelector('.board')
+
+for (let i = 0; i < 6; i++){
+    for (let j = 0; j < 7; j++){
+        const row = "row" + (i+1)
+        const column = "col" + (j+1)
+        const cell = document.createElement('div')
+        cell.classList.add("cell",row,column)
+        boardEl.appendChild(cell)
+    }
+}
+
+
+
 const resetEl = document.querySelector('.reset')
 const cells = document.querySelectorAll('.cell')
 const nextPlayer = document.querySelector('.nextPlayer')
