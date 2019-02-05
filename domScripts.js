@@ -1,38 +1,47 @@
 const boardEl = document.querySelector('.board')
 const resetEl = document.querySelector('.reset')
-const cells = document.querySelectorAll('.cell')
-const nextPlayer = document.querySelector('.nextPlayer')
 let currentPlayer = 1
+let nextPlayer = document.querySelector('.nextPlayer')
 
-for (let i = 0; i < 6; i++){
-    for (let j = 0; j < 7; j++){
-        const row = "row" + (i+1)
-        const column = "col" + (j+1)
+for (let i = 0; i < 7; i++){
+    const column = document.createElement('div')
+    column.classList.add(i)
+    boardEl.append(column)
+    for (let j = 0; j < 6; j++){
         const cell = document.createElement('div')
-        cell.classList.add("cell",row,column)
-        boardEl.appendChild(cell)
+        cell.classList.add('cell',i,j)
+        column.append(cell)
     }
 }
 
-boardEl.addEventListener('click', function(e){
-    if (e.composedPath().length === 7){
-        console.log(e.target.classList)
-        if (currentPlayer === 1){
-            e.target.style.backgroundColor = 'red'
-            e.target.style.pointerEvents = "none"
-            nextPlayer.innerText = "Black"
-            currentPlayer = 2
+boardEl.addEventListener('click', function(evt){
+    let columnToPutPiece = evt.composedPath()[1].classList.value
+    let rowToPutPiece = evt.composedPath()[1].children.length -1
+    
+    while (rowToPutPiece >= 0){
+        if (this.children[columnToPutPiece].children[rowToPutPiece].style.backgroundColor === 'red' ||
+            this.children[columnToPutPiece].children[rowToPutPiece].style.backgroundColor === 'black'){
+            rowToPutPiece--
         }
-        else {
-            e.target.style.backgroundColor = 'black'
-            e.target.style.pointerEvents = "none"
-            nextPlayer.innerText = "Red"
-            currentPlayer = 1
+        else{
+            if (currentPlayer === 1){
+                this.children[columnToPutPiece].children[rowToPutPiece].style.backgroundColor = 'red'
+                nextPlayer.innerText = "Black"
+                currentPlayer = 2
+            }
+            else{
+                this.children[columnToPutPiece].children[rowToPutPiece].style.backgroundColor = 'black'
+                nextPlayer.innerText = "Red"
+                currentPlayer = 1
+            }
+            break
         }
     }
 })
 
+const cells = document.querySelectorAll('.cell')
 resetEl.addEventListener('click', function(e){
+    console.log("Reset!")
     e.preventDefault()
     currentPlayer = 1
     nextPlayer.innerText = "Red"
