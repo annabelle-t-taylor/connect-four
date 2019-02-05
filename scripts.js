@@ -5,7 +5,6 @@ let nextPlayer = document.querySelector('.nextPlayer')
 let boardState = [[],[],[],[],[],[],[]]
 
 for (let i = 0; i < 7; i++){
-    console.log(i)
     for (let j = 0; j < 6; j++){
         boardState[j].push(" * ")
     }
@@ -50,7 +49,6 @@ boardEl.addEventListener('click', function(evt){
 
 const cells = document.querySelectorAll('.cell')
 resetEl.addEventListener('click', function(e){
-    console.log("Reset!")
     e.preventDefault()
     currentPlayer = 1
     nextPlayer.innerText = "Red"
